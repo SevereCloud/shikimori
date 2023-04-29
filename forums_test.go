@@ -8,7 +8,7 @@ import (
 func TestForums(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Forums(context.Background(), nil)
+	resp, err := shiki.Forums(context.Background())
 
 	NoError(t, err)
 	NotEmpty(t, resp)

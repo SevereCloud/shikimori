@@ -12,10 +12,8 @@ type Forum struct {
 	URL       string `json:"url"`
 }
 
-type ForumsParams struct{}
-
-func (s *API) Forums(ctx context.Context, params *ForumsParams) (resp []Forum, err error) {
-	err = s.get(ctx, &resp, "forums", params)
+func (s *API) Forums(ctx context.Context) (resp []Forum, err error) {
+	err = s.get(ctx, &resp, "forums", nil)
 
 	return
 }
