@@ -71,24 +71,115 @@ type AnimeImage struct {
 	X48      string `json:"x48"`
 }
 
+type AnimeOrder string
+
+const (
+	AnimeOrderID            AnimeOrder = "id"
+	AnimeOrderIDDesc        AnimeOrder = "id_desc"
+	AnimeOrderRanked        AnimeOrder = "ranked"
+	AnimeOrderKind          AnimeOrder = "kind"
+	AnimeOrderPopularity    AnimeOrder = "popularity"
+	AnimeOrderName          AnimeOrder = "name"
+	AnimeOrderAiredOn       AnimeOrder = "aired_on"
+	AnimeOrderEpisodes      AnimeOrder = "episodes"
+	AnimeOrderStatus        AnimeOrder = "status"
+	AnimeOrderRandom        AnimeOrder = "random"
+	AnimeOrderCreatedAt     AnimeOrder = "created_at"
+	AnimeOrderCreatedAtDesc AnimeOrder = "created_at_desc"
+)
+
+type AnimeDuration string
+
+const (
+	// Less than 10 minutes
+	AnimeDurationsS AnimeDuration = "S"
+	// Less than 30 minutes
+	AnimeDurationsD AnimeDuration = "D"
+	// More than 30 minutes
+	AnimeDurationsF AnimeDuration = "F"
+)
+
+type AnimeRating string
+
+const (
+	// No rating
+	AnimeRatingNone AnimeRating = "none"
+	// All ages
+	AnimeRatingG AnimeRating = "g"
+	// Children
+	AnimeRatingPG AnimeRating = "pg"
+	// Teens 13 or older
+	AnimeRatingPG13 AnimeRating = "pg_13"
+	// Recommended (violence & profanity)
+	AnimeRatingR AnimeRating = "r"
+	// Mild Nudity (may also contain violence & profanity)
+	AnimeRatingRPlus AnimeRating = "r_plus"
+	// Hentai (extreme sexual content/nudity)
+	AnimeRatingRX AnimeRating = "rx"
+)
+
+type AnimeMyList string
+
+const (
+	AnimeMyListPlanned    AnimeMyList = "planned"
+	AnimeMyListWatching   AnimeMyList = "watching"
+	AnimeMyListRewatching AnimeMyList = "rewatching"
+	AnimeMyListCompleted  AnimeMyList = "completed"
+	AnimeMyListOnHold     AnimeMyList = "on_hold"
+	AnimeMyListDropped    AnimeMyList = "dropped"
+)
+
 type AnimeParams struct {
-	Page       int    `json:"page,omitempty"`
-	Limit      int    `json:"limit,omitempty"`
-	Order      string `json:"order,omitempty"`
-	Kind       string `json:"kind,omitempty"`
-	Status     string `json:"status,omitempty"`
-	Season     string `json:"season,omitempty"`
-	Score      int    `json:"score,omitempty"`
-	Duration   string `json:"duration,omitempty"`
-	Rating     string `json:"rating,omitempty"`
-	Genre      string `json:"genre,omitempty"`
-	Studio     string `json:"studio,omitempty"`
-	Franchise  string `json:"franchise,omitempty"`
-	Censored   bool   `json:"censored,omitempty"`
-	MyList     string `json:"mylist,omitempty"`
-	IDs        string `json:"ids,omitempty"`
+	// Must be a number between 1 and 100000.
+	Page int `json:"page,omitempty"`
+
+	// 50 maximum. Must be a number.
+	Limit int `json:"limit,omitempty"`
+
+	// Must be one of: id, id_desc, ranked, kind, popularity, name, aired_on, episodes, status, random, ranked_random, ranked_shiki, created_at, created_at_desc.
+	Order AnimeOrder `json:"order,omitempty"`
+
+	// Must be one of: tv, movie, ova, ona, special, music, tv_13, tv_24, tv_48
+	Kind AnimeKind `json:"kind,omitempty"`
+
+	// Must be one of: anons, ongoing, released
+	Status AnimeStatus `json:"status,omitempty"`
+
+	// Examples: summer_2017, 2016, 2014_2016, 199x
+	Season string `json:"season,omitempty"`
+
+	// Minimal anime score. Must be a number.
+	Score int `json:"score,omitempty"`
+
+	// Must be one of: S, D, F
+	Duration AnimeDuration `json:"duration,omitempty"`
+
+	// Must be one of: none, g, pg, pg_13, r, r_plus, rx
+	Rating AnimeRating `json:"rating,omitempty"`
+
+	// List of genre ids separated by comma
+	Genre string `json:"genre,omitempty"`
+
+	// List of studio ids separated by comma
+	Studio string `json:"studio,omitempty"`
+
+	// List of franchises separated by comma
+	Franchise string `json:"franchise,omitempty"`
+
+	// Set to false to allow hentai, yaoi and yuri. Must be one of: true, false.
+	Censored bool `json:"censored,omitempty"`
+
+	// Status of manga in current user list. Must be one of: planned, watching, rewatching, completed, on_hold, dropped
+	MyList AnimeMyList `json:"mylist,omitempty"`
+
+	// List of anime ids separated by comma
+	IDs string `json:"ids,omitempty"`
+
+	// List of anime ids separated by comma
 	ExcludeIDs string `json:"exclude_ids,omitempty"`
-	Search     string `json:"search,omitempty"`
+
+	// Search phrase to filter animes by name. Must be a String
+	Search string `json:"search,omitempty"`
 }
 
 func (s *API) Animes(ctx context.Context, params *AnimeParams) (resp []Anime, err error) {
