@@ -10,7 +10,7 @@ import (
 func TestUserRate(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.UserRate(context.Background(), 57370056, nil)
+	resp, err := shiki.UserRate(context.Background(), 57370056)
 
 	NoError(t, err)
 	NotEmpty(t, resp)
@@ -18,6 +18,8 @@ func TestUserRate(t *testing.T) {
 
 func TestUserRates(t *testing.T) {
 	t.Parallel()
+	// To fix unproccessable entity error, convert everything to string
+	// For example {"user_id": 299749} -> {"user_id": "299749"}
 	t.Skip("FIXME: undefined method `split' for 299749:Integer")
 
 	resp, err := shiki.UserRates(context.Background(), &shikimori.UserRatesParams{ //nolint:exhaustruct,exhaustivestruct
