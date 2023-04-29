@@ -4,10 +4,8 @@ import (
 	"context"
 )
 
-type StatsActiveUsersParams struct{}
-
-func (s *API) StatsActiveUsers(ctx context.Context, params *StatsActiveUsersParams) (resp []int, err error) {
-	err = s.get(ctx, &resp, "stats/active_users", params)
+func (s *API) StatsActiveUsers(ctx context.Context) (resp []int, err error) {
+	err = s.get(ctx, &resp, "stats/active_users", nil)
 
 	return
 }

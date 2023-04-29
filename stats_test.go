@@ -8,7 +8,7 @@ import (
 func TestStatsActiveUsers(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.StatsActiveUsers(context.Background(), nil)
+	resp, err := shiki.StatsActiveUsers(context.Background())
 
 	NoError(t, err)
 	NotEmpty(t, resp)
