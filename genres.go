@@ -9,10 +9,8 @@ type Genre struct {
 	Kind    string `json:"kind"`
 }
 
-type GenresParams struct{}
-
-func (s *API) Genres(ctx context.Context, params *GenresParams) (resp []Genre, err error) {
-	err = s.get(ctx, &resp, "genres", params)
+func (s *API) Genres(ctx context.Context) (resp []Genre, err error) {
+	err = s.get(ctx, &resp, "genres", nil)
 
 	return
 }
