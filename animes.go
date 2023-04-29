@@ -88,3 +88,25 @@ func (s *API) AnimeScreenshots(
 
 	return
 }
+
+type ExternalLinks struct {
+	ID         int        `json:"id"`
+	Kind       string     `json:"kind"`
+	URL        string     `json:"url"`
+	Source     string     `json:"source"`
+	EntryID    int        `json:"entry_id"`
+	EntryType  string     `json:"entry_type"`
+	CreatedAt  time.Time  `json:"created_at"`
+	UpdatedAt  time.Time  `json:"updated_at"`
+	ImportedAt *time.Time `json:"imported_at"`
+}
+
+type AnimeExternalLinksParams struct{}
+
+func (s *API) AnimeExternalLinks(
+	ctx context.Context, id int, params *AnimeExternalLinksParams,
+) (resp []Screenshot, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/external_links", params)
+
+	return
+}

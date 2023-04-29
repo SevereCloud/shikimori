@@ -22,3 +22,12 @@ func TestAnimeScreenshots(t *testing.T) {
 	NoError(t, err)
 	NotEmpty(t, resp)
 }
+
+func TestAnimeExternalLinks(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeExternalLinks(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
