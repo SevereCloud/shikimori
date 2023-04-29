@@ -28,14 +28,31 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"time"
 )
+
+type UnknownError struct {
+	Status int
+	Body   string
+}
+
+func (e UnknownError) Error() string {
+	return fmt.Sprintf("shikimori: %d %s", e.Status, e.Body)
+}
 
 type NotFoundError struct{}
 
 func (e NotFoundError) Error() string {
-	return "shikimori: not found"
+	return "shikimori: Not found"
+}
+
+type TooManyRequestsError struct{}
+
+func (e TooManyRequestsError) Error() string {
+	return "shikimori: 429 Retry later"
 }
 
 type UnprocessableEntityErrors []string
@@ -44,11 +61,18 @@ func (e UnprocessableEntityErrors) Error() string {
 	return fmt.Sprintf("shikimori: unprocessable entity: %v", []string(e))
 }
 
+const (
+	rps = 5
+	rpm = 90
+)
+
 type API struct {
 	Client      *http.Client
 	BaseURL     string
 	UserAgent   string
 	AccessToken string
+
+	limits *limits
 }
 
 func NewAPI() *API {
@@ -57,6 +81,7 @@ func NewAPI() *API {
 		UserAgent:   "Go-http-client/1.1 (+https://github.com/SevereCloud/shikimori)",
 		AccessToken: "",
 		Client:      http.DefaultClient,
+		limits:      newLimits(newLimit(rps, time.Second), newLimit(rpm, time.Minute)),
 	}
 }
 
@@ -93,6 +118,11 @@ func (s *API) request(ctx context.Context, obj interface{}, method string, path 
 		return err
 	}
 
+	err = s.limits.RateLimit(ctx)
+	if err != nil {
+		return err
+	}
+
 	resp, err := s.Client.Do(req)
 	if err != nil {
 		return fmt.Errorf("shikimori: do request: %w", err)
@@ -101,7 +131,23 @@ func (s *API) request(ctx context.Context, obj interface{}, method string, path 
 
 	dec := json.NewDecoder(resp.Body)
 
+	err = s.handleStatus(resp, dec)
+	if err != nil {
+		return err
+	}
+
+	err = dec.Decode(&obj)
+	if err != nil {
+		return fmt.Errorf("shikimori decode: %w", err)
+	}
+
+	return nil
+}
+
+func (*API) handleStatus(resp *http.Response, dec *json.Decoder) error {
 	switch resp.StatusCode {
+	case http.StatusOK:
+		break
 	case http.StatusUnprocessableEntity:
 		var errUnprocessableEntity UnprocessableEntityErrors
 
@@ -110,14 +156,21 @@ func (s *API) request(ctx context.Context, obj interface{}, method string, path 
 			return fmt.Errorf("shikimori: decode 422 error: %w", err)
 		}
 
-		return errUnprocessableEntity
+		return &errUnprocessableEntity
 	case http.StatusNotFound:
-		return NotFoundError{}
-	}
+		return &NotFoundError{}
+	case http.StatusTooManyRequests:
+		return &TooManyRequestsError{}
+	default:
+		bytes, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return fmt.Errorf("shikimori: decode %d error: %w", resp.StatusCode, err)
+		}
 
-	err = dec.Decode(&obj)
-	if err != nil {
-		return fmt.Errorf("shikimori decode: %w", err)
+		return &UnknownError{
+			Status: resp.StatusCode,
+			Body:   string(bytes),
+		}
 	}
 
 	return nil
