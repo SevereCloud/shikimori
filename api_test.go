@@ -8,6 +8,8 @@ import (
 	"github.com/SevereCloud/shikimori"
 )
 
+const SevereCloudUser = 299749
+
 func isEmpty(object any) bool {
 	// get nil case out of the way
 	if object == nil {

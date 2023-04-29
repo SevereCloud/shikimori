@@ -11,7 +11,7 @@ func TestAchievements(t *testing.T) {
 	t.Parallel()
 
 	resp, err := shiki.Achievements(context.Background(), &shikimori.AchievementsParams{
-		UserID: 299749,
+		UserID: SevereCloudUser,
 	})
 
 	NoError(t, err)
