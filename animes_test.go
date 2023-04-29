@@ -13,3 +13,12 @@ func TestAnime(t *testing.T) {
 	NoError(t, err)
 	NotEmpty(t, resp)
 }
+
+func TestAnimeScreenshots(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeScreenshots(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
