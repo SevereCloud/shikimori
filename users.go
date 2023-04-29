@@ -54,7 +54,7 @@ type UsersAnimeRateParams struct {
 	// Validations:
 	Limit int `json:"limit,omitempty"`
 
-	Status AnimeRateStatus `json:"status,omitempty"`
+	Status UserRateStatus `json:"status,omitempty"`
 
 	// Set to true to discard hentai, yaoi and yuri
 	Censored bool `json:"censored,omitempty"`
