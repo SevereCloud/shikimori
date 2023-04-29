@@ -28,8 +28,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
+
+type NotFoundError struct{}
+
+func (e NotFoundError) Error() string {
+	return "shikimori: not found"
+}
+
+type UnprocessableEntityErrors []string
+
+func (e UnprocessableEntityErrors) Error() string {
+	return fmt.Sprintf("shikimori: unprocessable entity: %v", []string(e))
+}
 
 type API struct {
 	Client      *http.Client
@@ -38,27 +51,6 @@ type API struct {
 	AccessToken string
 }
 
-// API
-//
-// # Authentication
-//
-// OAuth2 is used for authentication. [OAuth2 guide].
-//
-// # Restrictions
-//
-// API access is limited by `5rps` and `90rpm`.
-//
-// # Requirements
-//
-// Add your Oauth2 Application name to [API.UserAgent] requests header.
-// Don’t mimic a browser.
-// Your IP address may be banned if you use API without properly set [API.UserAgent] header.
-//
-// # Pagination in API
-//
-// When you request N elements from paginated API, you will get N+1 results if API has next page.
-//
-// [OAuth2 guide]: https://shikimori.me/oauth
 func NewAPI() *API {
 	return &API{
 		BaseURL:     "https://shikimori.me/api/",
@@ -75,12 +67,14 @@ func (s *API) buildRequest(ctx context.Context, method string, path string, para
 
 	err := json.NewEncoder(buf).Encode(params)
 	if err != nil {
-		return nil, fmt.Errorf("shikimori encode: %w", err)
+		return nil, fmt.Errorf("shikimori: encode: %w", err)
 	}
+
+	log.Println(buf)
 
 	req, err := http.NewRequestWithContext(ctx, method, url, buf)
 	if err != nil {
-		return nil, fmt.Errorf("shikimori build request: %w", err)
+		return nil, fmt.Errorf("shikimori: build request: %w", err)
 	}
 
 	req.Header.Set("User-Agent", s.UserAgent)
@@ -101,11 +95,27 @@ func (s *API) request(ctx context.Context, obj interface{}, method string, path 
 
 	resp, err := s.Client.Do(req)
 	if err != nil {
-		return fmt.Errorf("shikimori do request: %w", err)
+		return fmt.Errorf("shikimori: do request: %w", err)
 	}
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(&obj)
+	dec := json.NewDecoder(resp.Body)
+
+	switch resp.StatusCode {
+	case http.StatusUnprocessableEntity:
+		var errUnprocessableEntity UnprocessableEntityErrors
+
+		err := dec.Decode(&errUnprocessableEntity)
+		if err != nil {
+			return fmt.Errorf("shikimori: decode 422 error: %w", err)
+		}
+
+		return errUnprocessableEntity
+	case http.StatusNotFound:
+		return NotFoundError{}
+	}
+
+	err = dec.Decode(&obj)
 	if err != nil {
 		return fmt.Errorf("shikimori decode: %w", err)
 	}
