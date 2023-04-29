@@ -2,6 +2,7 @@ package shikimori
 
 import (
 	"context"
+	"strconv"
 	"time"
 )
 
@@ -25,20 +26,21 @@ type UserImage struct {
 }
 
 type UsersAnimeRate struct {
-	ID        int         `json:"id"`
-	Score     int         `json:"score"`
-	Status    string      `json:"status"`
-	Text      *string     `json:"text"`
-	Episodes  int         `json:"episodes"`
-	Chapters  int         `json:"chapters"`
-	Volumes   int         `json:"volumes"`
-	TextHTML  string      `json:"text_html"`
-	Rewatches int         `json:"rewatches"`
-	CreatedAt time.Time   `json:"created_at"`
-	UpdatedAt time.Time   `json:"updated_at"`
-	User      User        `json:"user"`
-	Anime     Anime       `json:"anime"`
-	Manga     interface{} `json:"manga"`
+	ID        int       `json:"id"`
+	Score     int       `json:"score"`
+	Status    string    `json:"status"`
+	Text      *string   `json:"text,omitempty"`
+	Episodes  *int      `json:"episodes,omitempty"`
+	Chapters  *int      `json:"chapters,omitempty"`
+	Volumes   *int      `json:"volumes,omitempty"`
+	TextHTML  string    `json:"text_html"`
+	Rewatches int       `json:"rewatches"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	User      User      `json:"user"`
+	Anime     *Anime    `json:"anime,omitempty"`
+	// Can represent Manga and Ranobe structs
+	Manga *interface{} `json:"manga,omitempty"`
 }
 
 type UsersAnimeRateParams struct {
@@ -61,9 +63,9 @@ type UsersAnimeRateParams struct {
 }
 
 func (s *API) UsersAnimeRates(
-	ctx context.Context, id string, params *UsersAnimeRateParams,
+	ctx context.Context, id int, params *UsersAnimeRateParams,
 ) (resp []UsersAnimeRate, err error) {
-	err = s.get(ctx, &resp, "users/"+id+"/anime_rates", params)
+	err = s.get(ctx, &resp, "users/"+strconv.Itoa(id)+"/anime_rates", params)
 
 	return
 }
