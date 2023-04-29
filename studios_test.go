@@ -8,7 +8,7 @@ import (
 func TestStudios(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Studios(context.Background(), nil)
+	resp, err := shiki.Studios(context.Background())
 
 	NoError(t, err)
 	NotEmpty(t, resp)

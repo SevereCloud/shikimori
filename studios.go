@@ -9,13 +9,11 @@ type Studio struct {
 	Name         string  `json:"name"`
 	FilteredName string  `json:"filtered_name"`
 	Real         bool    `json:"real"`
-	Image        *string `json:"image"`
+	Image        *string `json:"image,omitempty"`
 }
 
-type StudiosParams struct{}
-
-func (s *API) Studios(ctx context.Context, params *StudiosParams) (resp []Studio, err error) {
-	err = s.get(ctx, &resp, "studios", params)
+func (s *API) Studios(ctx context.Context) (resp []Studio, err error) {
+	err = s.get(ctx, &resp, "studios", nil)
 
 	return
 }
