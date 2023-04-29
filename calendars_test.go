@@ -3,8 +3,6 @@ package shikimori_test
 import (
 	"context"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestCalendar(t *testing.T) {
@@ -12,6 +10,6 @@ func TestCalendar(t *testing.T) {
 
 	resp, err := shiki.Calendar(context.Background(), nil)
 
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp)
+	NoError(t, err)
+	NotEmpty(t, resp)
 }

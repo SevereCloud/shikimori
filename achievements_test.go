@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/SevereCloud/shikimori"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestAchievements(t *testing.T) {
@@ -15,6 +14,6 @@ func TestAchievements(t *testing.T) {
 		UserID: 299749,
 	})
 
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp)
+	NoError(t, err)
+	NotEmpty(t, resp)
 }
