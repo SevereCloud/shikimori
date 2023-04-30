@@ -8,7 +8,7 @@ import (
 func TestGenres(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Genres(context.Background())
+	resp, err := shiki.Genres(context.Background(), nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)

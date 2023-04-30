@@ -8,7 +8,7 @@ import (
 func TestPublishers(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Publishers(context.Background())
+	resp, err := shiki.Publishers(context.Background(), nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)

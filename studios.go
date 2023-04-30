@@ -12,8 +12,10 @@ type Studio struct {
 	Image        *string `json:"image,omitempty"`
 }
 
-func (s *API) Studios(ctx context.Context) (resp []Studio, err error) {
-	err = s.get(ctx, &resp, "studios", nil)
+type StudiosParams struct{}
+
+func (s *API) Studios(ctx context.Context, params *StudiosParams) (resp []Studio, err error) {
+	err = s.get(ctx, &resp, "studios", params)
 
 	return
 }

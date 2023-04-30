@@ -15,8 +15,10 @@ type Video struct {
 	Hosting   string  `json:"hosting"`
 }
 
-func (s *API) Video(ctx context.Context, id int) (resp []Video, err error) {
-	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/videos", nil)
+type VideoParams struct{}
+
+func (s *API) Video(ctx context.Context, id int, params *VideoParams) (resp []Video, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/videos", params)
 
 	return
 }

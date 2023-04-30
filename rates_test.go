@@ -10,7 +10,7 @@ import (
 func TestUserRate(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.UserRate(context.Background(), 57370056)
+	resp, err := shiki.UserRate(context.Background(), 57370056, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)

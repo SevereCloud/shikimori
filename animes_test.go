@@ -10,7 +10,7 @@ import (
 func TestAnimes(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Animes(context.Background(), &shikimori.AnimeParams{
+	resp, err := shiki.Animes(context.Background(), &shikimori.AnimesParams{ //nolint:exhaustruct,exhaustivestruct
 		Page:  1,
 		Limit: 10,
 		Order: "ranked",
@@ -23,7 +23,7 @@ func TestAnimes(t *testing.T) {
 func TestAnime(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Anime(context.Background(), 5114)
+	resp, err := shiki.Anime(context.Background(), 5114, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)
@@ -32,7 +32,7 @@ func TestAnime(t *testing.T) {
 func TestAnimeScreenshots(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.AnimeScreenshots(context.Background(), 5114)
+	resp, err := shiki.AnimeScreenshots(context.Background(), 5114, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)
@@ -41,7 +41,7 @@ func TestAnimeScreenshots(t *testing.T) {
 func TestAnimeExternalLinks(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.AnimeExternalLinks(context.Background(), 5114)
+	resp, err := shiki.AnimeExternalLinks(context.Background(), 5114, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)

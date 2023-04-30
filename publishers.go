@@ -9,8 +9,10 @@ type Publisher struct {
 	Name string `json:"name"`
 }
 
-func (s *API) Publishers(ctx context.Context) (resp []Publisher, err error) {
-	err = s.get(ctx, &resp, "publishers", nil)
+type PublishersParams struct{}
+
+func (s *API) Publishers(ctx context.Context, params *PublishersParams) (resp []Publisher, err error) {
+	err = s.get(ctx, &resp, "publishers", params)
 
 	return
 }

@@ -30,8 +30,10 @@ type UserRate struct {
 	UpdatedAt  time.Time           `json:"updated_at"`
 }
 
-func (s *API) UserRate(ctx context.Context, id int) (resp UserRate, err error) {
-	err = s.get(ctx, &resp, "v2/user_rates/"+strconv.Itoa(id), nil)
+type UserRateParams struct{}
+
+func (s *API) UserRate(ctx context.Context, id int, params *UserRateParams) (resp UserRate, err error) {
+	err = s.get(ctx, &resp, "v2/user_rates/"+strconv.Itoa(id), params)
 
 	return
 }

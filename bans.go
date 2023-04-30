@@ -29,7 +29,7 @@ type Ban struct {
 }
 
 // Undocumented params for /api/bans
-// See: https://github.com/shikimori/shikimori/blob/cbaf4cf9d0d9c0c7f1ecbeac6816b7c84607ad7d/app/controllers/api/v1/bans_controller.rb#L5-L6
+// See: https://github.com/shikimori/shikimori/blob/master/app/controllers/api/v1/bans_controller.rb
 // Page constraints: From 1 to ...
 // Limit constraints: From 1 to 30
 type BansParams struct {

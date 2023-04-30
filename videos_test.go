@@ -8,7 +8,7 @@ import (
 func TestVideo(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Video(context.Background(), 5114)
+	resp, err := shiki.Video(context.Background(), 5114, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)
@@ -17,7 +17,7 @@ func TestVideo(t *testing.T) {
 func TestVideoNullName(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Video(context.Background(), 23)
+	resp, err := shiki.Video(context.Background(), 23, nil)
 
 	NoError(t, err)
 	NotEmpty(t, resp)
