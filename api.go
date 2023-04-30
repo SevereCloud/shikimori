@@ -29,9 +29,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"time"
+
+	"github.com/SevereCloud/shikimori/internal"
 )
 
 type UnknownError struct {
@@ -62,8 +63,9 @@ func (e UnprocessableEntityErrors) Error() string {
 }
 
 const (
-	rps = 5
-	rpm = 90
+	rps        = 5
+	rpm        = 90
+	infelicity = time.Millisecond * 50
 )
 
 type API struct {
@@ -72,7 +74,7 @@ type API struct {
 	UserAgent   string
 	AccessToken string
 
-	limits *limits
+	limits *internal.Limits
 }
 
 func NewAPI() *API {
@@ -81,7 +83,10 @@ func NewAPI() *API {
 		UserAgent:   "Go-http-client/1.1 (+https://github.com/SevereCloud/shikimori)",
 		AccessToken: "",
 		Client:      http.DefaultClient,
-		limits:      newLimits(newLimit(rps, time.Second), newLimit(rpm, time.Minute)),
+		limits: internal.NewLimits(
+			internal.NewLimit(rps, time.Second+infelicity),
+			internal.NewLimit(rpm, time.Minute+infelicity),
+		),
 	}
 }
 
@@ -94,8 +99,6 @@ func (s *API) buildRequest(ctx context.Context, method string, path string, para
 	if err != nil {
 		return nil, fmt.Errorf("shikimori: encode: %w", err)
 	}
-
-	log.Println(buf)
 
 	req, err := http.NewRequestWithContext(ctx, method, url, buf)
 	if err != nil {
@@ -120,7 +123,7 @@ func (s *API) request(ctx context.Context, obj interface{}, method string, path 
 
 	err = s.limits.RateLimit(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("shikimori: %w", err)
 	}
 
 	resp, err := s.Client.Do(req)
