@@ -81,7 +81,7 @@ type Person struct {
 	BirthOn          PersonDate   `json:"birth_on"`
 	DeceasedOn       PersonDate   `json:"deceased_on"`
 	Website          string       `json:"website"`
-	GrouppedRoles    [][]RoleStat `json:"groupped_roles"`
+	GrouppedRoles    []RoleStat   `json:"groupped_roles"`
 	Roles            []PersonRole `json:"roles"`
 	Works            []PersonWork `json:"works"`
 	TopicID          int          `json:"topic_id"`
