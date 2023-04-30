@@ -8,7 +8,7 @@ import (
 type CalendarItem struct {
 	NextEpisode   int       `json:"next_episode"`
 	NextEpisodeAt time.Time `json:"next_episode_at"`
-	Duration      int       `json:"duration"`
+	Duration      *int      `json:"duration,omitempty"`
 	Anime         Anime     `json:"anime"`
 }
 

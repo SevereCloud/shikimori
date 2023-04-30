@@ -5,31 +5,37 @@ import (
 	"time"
 )
 
+// Can be Anime, Manga structs.
+type TopicLinked struct {
+	Anime
+	// Manga
+}
+
 type Topic struct {
-	ID                int         `json:"id"`
-	TopicTitle        string      `json:"topic_title"`
-	Body              string      `json:"body"`
-	HTMLBody          string      `json:"html_body"`
-	HTMLFooter        string      `json:"html_footer"`
-	CreatedAt         time.Time   `json:"created_at"`
-	CommentsCount     int         `json:"comments_count"`
-	Forum             Forum       `json:"forum"`
-	User              User        `json:"user"`
-	Type              string      `json:"type"`
-	LinkedID          int         `json:"linked_id"`
-	LinkedType        string      `json:"linked_type"`
-	Linked            interface{} `json:"linked"`
-	Viewed            bool        `json:"viewed"`
-	LastCommentViewed bool        `json:"last_comment_viewed"`
-	Event             interface{} `json:"event"`
-	Episode           interface{} `json:"episode"`
+	ID                int          `json:"id"`
+	TopicTitle        string       `json:"topic_title"`
+	Body              string       `json:"body"`
+	HTMLBody          string       `json:"html_body"`
+	HTMLFooter        string       `json:"html_footer"`
+	CreatedAt         time.Time    `json:"created_at"`
+	CommentsCount     int          `json:"comments_count"`
+	Forum             Forum        `json:"forum"`
+	User              User         `json:"user"`
+	Type              string       `json:"type"`
+	LinkedID          int          `json:"linked_id"`
+	LinkedType        string       `json:"linked_type"`
+	Linked            *TopicLinked `json:"linked,omitempty"`
+	Viewed            bool         `json:"viewed"`
+	LastCommentViewed *bool        `json:"last_comment_viewed,omitempty"`
+	Event             *string      `json:"event,omitempty"`
+	Episode           *int         `json:"episode,omitempty"`
 }
 
 type TopicsUpdate struct {
 	ID        int         `json:"id"`
-	Linked    interface{} `json:"linked"`
-	Event     string      `json:"event"`
-	Episode   int         `json:"episode"`
+	Linked    TopicLinked `json:"linked"`
+	Event     *string     `json:"event,omitempty"`
+	Episode   *int        `json:"episode,omitempty"`
 	CreatedAt time.Time   `json:"created_at"`
 	URL       string      `json:"url"`
 }

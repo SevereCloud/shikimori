@@ -3,7 +3,22 @@ package shikimori_test
 import (
 	"context"
 	"testing"
+
+	"github.com/SevereCloud/shikimori"
 )
+
+func TestAnimes(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.Animes(context.Background(), &shikimori.AnimesParams{ //nolint:exhaustruct,exhaustivestruct
+		Page:  1,
+		Limit: 10,
+		Order: "ranked",
+	})
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
 
 func TestAnime(t *testing.T) {
 	t.Parallel()

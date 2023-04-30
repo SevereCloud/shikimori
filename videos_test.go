@@ -13,3 +13,12 @@ func TestVideo(t *testing.T) {
 	NoError(t, err)
 	NotEmpty(t, resp)
 }
+
+func TestVideoNullName(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.Video(context.Background(), 23, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
