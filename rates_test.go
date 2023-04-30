@@ -22,7 +22,7 @@ func TestUserRates(t *testing.T) {
 	// For example {"user_id": 299749} -> {"user_id": "299749"}
 	t.Skip("FIXME: undefined method `split' for 299749:Integer")
 
-	resp, err := shiki.UserRates(context.Background(), &shikimori.UserRatesParams{ //nolint:exhaustruct,exhaustivestruct
+	resp, err := shiki.UserRates(context.Background(), &shikimori.UserRatesParams{
 		UserID: SevereCloudUser,
 	})
 

@@ -10,7 +10,7 @@ import (
 func TestAnimes(t *testing.T) {
 	t.Parallel()
 
-	resp, err := shiki.Animes(context.Background(), &shikimori.AnimesParams{ //nolint:exhaustruct,exhaustivestruct
+	resp, err := shiki.Animes(context.Background(), &shikimori.AnimesParams{
 		Page:  1,
 		Limit: 10,
 		Order: "ranked",

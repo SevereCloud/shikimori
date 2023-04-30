@@ -17,18 +17,18 @@ type RatesStatusesStat struct {
 }
 
 type Anime struct {
-	ID            int        `json:"id"`
-	Name          string     `json:"name"`
-	Russian       string     `json:"russian"`
-	Image         AnimeImage `json:"image"`
-	URL           string     `json:"url"`
-	Kind          *string    `json:"kind,omitempty"`
-	Score         string     `json:"score"`
-	Status        string     `json:"status"`
-	Episodes      int        `json:"episodes"`
-	EpisodesAired int        `json:"episodes_aired"`
-	AiredOn       *string    `json:"aired_on,omitempty"`
-	ReleasedOn    *string    `json:"released_on,omitempty"`
+	ID            int     `json:"id"`
+	Name          string  `json:"name"`
+	Russian       string  `json:"russian"`
+	Image         Image   `json:"image"`
+	URL           string  `json:"url"`
+	Kind          *string `json:"kind,omitempty"`
+	Score         string  `json:"score"`
+	Status        string  `json:"status"`
+	Episodes      int     `json:"episodes"`
+	EpisodesAired int     `json:"episodes_aired"`
+	AiredOn       *string `json:"aired_on,omitempty"`
+	ReleasedOn    *string `json:"released_on,omitempty"`
 }
 
 type AnimeFull struct {

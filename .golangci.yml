@@ -7,3 +7,5 @@ linters:
   disable:
     - tagliatelle
     - nonamedreturns
+    - exhaustivestruct
+    - exhaustruct
