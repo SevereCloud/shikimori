@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Can be Anime, Manga structs
+// Can be Anime, Manga structs.
 type TopicLinked struct {
 	Anime
 	// Manga

@@ -31,7 +31,7 @@ type Ban struct {
 // Undocumented params for /api/bans
 // See: https://github.com/shikimori/shikimori/blob/master/app/controllers/api/v1/bans_controller.rb
 // Page constraints: From 1 to ...
-// Limit constraints: From 1 to 30
+// Limit constraints: From 1 to 30.
 type BansParams struct {
 	Page  int `json:"page,omitempty"`
 	Limit int `json:"limit,omitempty"`

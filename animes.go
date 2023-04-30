@@ -201,7 +201,9 @@ func (s *API) Anime(ctx context.Context, id int, params *AnimeParams) (resp Anim
 
 type AnimeScreenshotsParams struct{}
 
-func (s *API) AnimeScreenshots(ctx context.Context, id int, params *AnimeScreenshotsParams) (resp []Screenshot, err error) {
+func (s *API) AnimeScreenshots(
+	ctx context.Context, id int, params *AnimeScreenshotsParams,
+) (resp []Screenshot, err error) {
 	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/screenshots", params)
 
 	return
@@ -221,7 +223,9 @@ type ExternalLinks struct {
 
 type AnimeExternalLinksParams struct{}
 
-func (s *API) AnimeExternalLinks(ctx context.Context, id int, params *AnimeExternalLinksParams) (resp []Screenshot, err error) {
+func (s *API) AnimeExternalLinks(
+	ctx context.Context, id int, params *AnimeExternalLinksParams,
+) (resp []Screenshot, err error) {
 	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/external_links", params)
 
 	return

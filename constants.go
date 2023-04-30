@@ -13,7 +13,7 @@ const (
 	AnimeKindOna     AnimeKind = "ona"
 	AnimeKindSpecial AnimeKind = "special"
 	AnimeKindMusic   AnimeKind = "music"
-	// TV13, TV24 and TV48 used in AnimeParams
+	// TV13, TV24 and TV48 used in AnimesParams.
 	AnimeKindTV13 AnimeKind = "tv_13"
 	AnimeKindTV24 AnimeKind = "tv_24"
 	AnimeKindTV48 AnimeKind = "tv_48"
