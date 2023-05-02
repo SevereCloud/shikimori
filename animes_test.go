@@ -29,6 +29,15 @@ func TestAnime(t *testing.T) {
 	NotEmpty(t, resp)
 }
 
+func TestAnimeRoles(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeRoles(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
+
 func TestAnimeScreenshots(t *testing.T) {
 	t.Parallel()
 

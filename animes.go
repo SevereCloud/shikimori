@@ -199,6 +199,23 @@ func (s *API) Anime(ctx context.Context, id int, params *AnimeParams) (resp Anim
 	return
 }
 
+type AnimeRole struct {
+	Roles        []string       `json:"roles"`
+	RolesRussian []string       `json:"roles_russian"`
+	Character    *CharacterBase `json:"character"`
+	Person       *PersonBase    `json:"person"`
+}
+
+type AnimeRolesParams struct{}
+
+func (s *API) AnimeRoles(
+	ctx context.Context, id int, params *AnimeScreenshotsParams,
+) (resp []AnimeRole, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/roles", params)
+
+	return
+}
+
 type AnimeScreenshotsParams struct{}
 
 func (s *API) AnimeScreenshots(

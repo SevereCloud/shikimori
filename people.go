@@ -70,12 +70,16 @@ type PersonWork struct {
 	Role  string      `json:"role"`
 }
 
+type PersonBase struct {
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Russian string `json:"russian"`
+	Image   Image  `json:"image"`
+	URL     string `json:"url"`
+}
+
 type Person struct {
-	ID               int          `json:"id"`
-	Name             string       `json:"name"`
-	Russian          string       `json:"russian"`
-	Image            Image        `json:"image"`
-	URL              string       `json:"url"`
+	PersonBase
 	Japanese         string       `json:"japanese"`
 	JobTitle         string       `json:"job_title"`
 	BirthOn          PersonDate   `json:"birth_on"`
