@@ -224,6 +224,21 @@ func (s *API) AnimeSimilar(ctx context.Context, id int, params *AnimeSimilarPara
 	return
 }
 
+type AnimeRelated struct {
+	Relation        string      `json:"relation"`
+	RelationRussian string      `json:"relation_russian"`
+	Anime           Anime       `json:"anime"`
+	Manga           interface{} `json:"manga"`
+}
+
+type AnimeRelatedParams struct{}
+
+func (s *API) AnimeRelated(ctx context.Context, id int, params *AnimeRelatedParams) (resp []AnimeRelated, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/related", params)
+
+	return
+}
+
 type AnimeScreenshotsParams struct{}
 
 func (s *API) AnimeScreenshots(

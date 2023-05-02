@@ -47,6 +47,15 @@ func TestAnimeSimilar(t *testing.T) {
 	NotEmpty(t, resp)
 }
 
+func TestAnimeRelated(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeRelated(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
+
 func TestAnimeScreenshots(t *testing.T) {
 	t.Parallel()
 
