@@ -265,7 +265,7 @@ type AnimeExternalLinksParams struct{}
 
 func (s *API) AnimeExternalLinks(
 	ctx context.Context, id int, params *AnimeExternalLinksParams,
-) (resp []Screenshot, err error) {
+) (resp []ExternalLinks, err error) {
 	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/external_links", params)
 
 	return
