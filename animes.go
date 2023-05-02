@@ -209,9 +209,17 @@ type AnimeRole struct {
 type AnimeRolesParams struct{}
 
 func (s *API) AnimeRoles(
-	ctx context.Context, id int, params *AnimeScreenshotsParams,
+	ctx context.Context, id int, params *AnimeRolesParams,
 ) (resp []AnimeRole, err error) {
 	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/roles", params)
+
+	return
+}
+
+type AnimeSimilarParams struct{}
+
+func (s *API) AnimeSimilar(ctx context.Context, id int, params *AnimeSimilarParams) (resp []Anime, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/similar", params)
 
 	return
 }
