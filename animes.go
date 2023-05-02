@@ -64,6 +64,12 @@ type AnimeFull struct {
 	UserRate           *UserRate           `json:"user_rate,omitempty"`
 }
 
+type CharacterAnime struct {
+	Anime
+	Roles []string `json:"roles"`
+	Role  string   `json:"role"`
+}
+
 type AnimeImage struct {
 	Original string `json:"original"`
 	Preview  string `json:"preview"`
