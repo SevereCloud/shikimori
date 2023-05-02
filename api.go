@@ -65,7 +65,7 @@ func (e UnprocessableEntityErrors) Error() string {
 const (
 	rps        = 5
 	rpm        = 90
-	infelicity = time.Millisecond * 50
+	infelicity = time.Millisecond * 100
 )
 
 type API struct {

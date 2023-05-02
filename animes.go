@@ -270,3 +270,13 @@ func (s *API) AnimeExternalLinks(
 
 	return
 }
+
+type AnimeTopicsParams struct{}
+
+func (s *API) AnimeTopics(
+	ctx context.Context, id int, params *AnimeTopicsParams,
+) (resp []Topic, err error) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/topics", params)
+
+	return
+}

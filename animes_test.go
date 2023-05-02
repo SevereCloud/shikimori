@@ -73,3 +73,12 @@ func TestAnimeExternalLinks(t *testing.T) {
 	NoError(t, err)
 	NotEmpty(t, resp)
 }
+
+func TestAnimeTopics(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeTopics(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
