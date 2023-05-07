@@ -96,6 +96,17 @@ func (s *API) RanobeRelated(ctx context.Context, id int, params *RanobeRelatedPa
 	return
 }
 
+type RanobeFranchiseParams struct{}
+
+func (s *API) RanobeFranchise(ctx context.Context, id int, params *RanobeFranchiseParams) (
+	resp Franchise,
+	err error,
+) {
+	err = s.get(ctx, &resp, "ranobe/"+strconv.Itoa(id)+"/franchise", params)
+
+	return
+}
+
 type RanobeExternalLinksParams struct{}
 
 func (s *API) RanobeExternalLinks(ctx context.Context, id int, params *RanobeExternalLinksParams) (

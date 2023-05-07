@@ -65,6 +65,15 @@ func TestAnimeScreenshots(t *testing.T) {
 	NotEmpty(t, resp)
 }
 
+func TestAnimeFranchise(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.AnimeFranchise(context.Background(), 5114, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
+
 func TestAnimeExternalLinks(t *testing.T) {
 	t.Parallel()
 

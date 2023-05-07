@@ -255,6 +255,17 @@ func (s *API) AnimeScreenshots(
 	return
 }
 
+type AnimeFranchiseParams struct{}
+
+func (s *API) AnimeFranchise(ctx context.Context, id int, params *AnimeFranchiseParams) (
+	resp Franchise,
+	err error,
+) {
+	err = s.get(ctx, &resp, "animes/"+strconv.Itoa(id)+"/franchise", params)
+
+	return
+}
+
 type AnimeExternalLinksParams struct{}
 
 func (s *API) AnimeExternalLinks(

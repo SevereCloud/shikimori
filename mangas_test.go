@@ -41,6 +41,15 @@ func TestMangaRelated(t *testing.T) {
 	NotEmpty(t, resp)
 }
 
+func TestMangaFranchise(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.MangaFranchise(context.Background(), 27, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
+
 func TestMangaExternalLinks(t *testing.T) {
 	t.Parallel()
 

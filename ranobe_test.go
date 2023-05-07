@@ -41,6 +41,15 @@ func TestRanobeRelated(t *testing.T) {
 	NotEmpty(t, resp)
 }
 
+func TestRanobeFranchise(t *testing.T) {
+	t.Parallel()
+
+	resp, err := shiki.RanobeFranchise(context.Background(), 14893, nil)
+
+	NoError(t, err)
+	NotEmpty(t, resp)
+}
+
 func TestRanobeExternalLinks(t *testing.T) {
 	t.Parallel()
 

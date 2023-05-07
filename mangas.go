@@ -93,6 +93,17 @@ func (s *API) MangaRelated(ctx context.Context, id int, params *MangaRelatedPara
 	return
 }
 
+type MangaFranchiseParams struct{}
+
+func (s *API) MangaFranchise(ctx context.Context, id int, params *MangaFranchiseParams) (
+	resp Franchise,
+	err error,
+) {
+	err = s.get(ctx, &resp, "mangas/"+strconv.Itoa(id)+"/franchise", params)
+
+	return
+}
+
 type MangaExternalLinksParams struct{}
 
 func (s *API) MangaExternalLinks(
