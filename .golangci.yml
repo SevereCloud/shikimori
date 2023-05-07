@@ -9,6 +9,7 @@ linters:
     - nonamedreturns
     - exhaustivestruct
     - exhaustruct
+    - dupl
 
     # deprecated
     - nosnakecase
